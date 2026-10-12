@@ -1,3 +1,4 @@
+// Riggs
 #include <string>
 
 #ifndef PRODUCT_H
