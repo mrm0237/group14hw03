@@ -1,3 +1,4 @@
+// Riggs
 #include "product.h"
 #include "transaction.h"
 #include "person.h"
