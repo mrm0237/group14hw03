@@ -1,3 +1,4 @@
+// Christian
 #include <string>
 #include "person.h"
 #include "product.h"
