@@ -11,11 +11,7 @@
 #include "store.h"
 #include "transaction.h"
 
-using std::cout;
-using std::endl;
-using std::ifstream;
-using std::ofstream;
-using std::getline;
+using namespace std;
 
 int main()
 {
