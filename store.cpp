@@ -62,13 +62,61 @@ class Store{
       new_products[i] = products_[i];
     }
     new_products[num_products_] = item;
-    delete[] products_;
-    products_ = new_products;
+    delete[] products_;         // out with the old
+    products_ = new_products;   // in with the new
     num_products_++;
     return true;
   }
     
+  bool add_customer(Person customer) {
+    // See if the customer already exists in the store
+    for (int i = 0; i < num_customers_; i++) {
+      if (customers_[i].name() == customer.name()) {
+        return false;  // Customer exists, so we don't need to add them
+      }
+      // Add the customer to the store
+      Person* new_customers = new Person[num_customers_ + 1];
+      for (int i = 0; i < num_customers_; i++) { // Populate new array
+        new_customers[i] = customers_[i];
+      }
+      new_customers[num_customers_] = customer;
+      delete[] customers_;         // out with the old,
+      customers_ = new_customers;  // in with the new
+      num_customers_++;
+      return true;
+  }
+  bool update_customer(int index, Person customer) {
+    if (index < 0 || index >= num_customers_) {
+      return false;  // check that index is in amount of customers array
+    }
+    customers_[index] = customer;  // customer at that index is changed to this customer
+    return true;
+  }
 
+  product get_product(int index) {
+    if (index < 0 || index >= num_products_) {    
+      throw std::out_of_range("Invalid product index"); 
+    }                          // if products_ has index index,
+    return products_[index];   // output products_[index]
+  }
+
+    bool add_transaction(transaction ntranscation) {
+      // See if the transaction already exists in the store
+      for (int i = 0; i < num_transactions_; i++) {
+        if (transactions_[i].id() == transaction.id()) {
+          return false;  // Transaction already exists
+        }
+      }
+      // Add the transaction to the store
+      transaction* new_transactions = new transaction[num_transactions_++];
+      for (int i = 0; i < num_transactions_-1; i++) {
+        new_transactions[i] = transactions_[i];
+      }
+      new_transactions[num_transactions_] = transaction;
+      delete[] transactions_;
+      transactions_ = new_transactions;
+      return true;
+    }
 
 
 
