@@ -108,7 +108,7 @@ class Store{
         }
       }
       // Add the transaction to the store
-      transaction* new_transactions = new transaction[num_transactions_++];
+    transaction* new_transactions = new transaction[num_transactions_++];
       for (int i = 0; i < num_transactions_-1; i++) {
         new_transactions[i] = transactions_[i];
       }
@@ -118,8 +118,83 @@ class Store{
       return true;
     }
 
+    transaction get_transaction(int index) {
+      if (index < 0 || index >= num_transactions_) {
+        throw std::out_of_range("Invalid transaction index");
+      }
+      return transactions_[index];
+    }
 
+    bool make_purchase(Person customer, product item, int amount) {
+      // See if the customer exists in the store
+      int customer_index = -1;
+      for (int i = 0; i < num_customers_; i++) {
+        if (customers_[i].name() == customer.name()) {
+          customer_index = i;
+          break;
+        }  
+      }  
+      if (customer_index == -1) {
+        return false; // Customer does not exist 
+      }
 
+      // See if the product exists
+      int product_index = -1;
+      for (int i = 0; i < num_products_; i++) {
+        if (products_[i].name() == item.name()) {
+          product_index = i;
+          break;
+        }
+      }
+      if (product_index == -1) {
+        return false; // Product does not exist
+      }  
+
+      // Make a new transaction
+      transaction new_transaction(customer, item, amount);
+      return add_transaction(new_transaction);
+    }
+
+    // Returns a string listing all products associated with the store
+    string product_info() {
+      std::ostringstream oss;
+      for (int i = 0; i < num_products_; i++) {
+        oss << "Product Name: " << products_[i].name();
+        oss << ", Price: " << products_i.price() << endl;
+      }
+    return oss.str();
+    }
+    // Returns a string of all the transactions the store has made
+    string transaction_info() {
+      std::ostringstream oss;
+      for (int i = 0; i < num_transactions_; i++) {
+        oss << "Transaction ID: " << transaction_[i].id();
+        oss << ", Customer: " << transactions_[i].customer().name();
+        oss << ", Product: " << transactions_[i].product().name();
+        oss << ", Amount: " << transactions_[i].amount() << endl;
+    }
+    return oss.str();
+  }
+
+    string store_info() {  // Return all of the info from the store
+      std::ostringstream oss;
+      oss << "Number of Customers: " << num_customers_ << endl;
+      oss << "Number of Products: " << num_products_ << endl;
+      oss << "Number of Transactions: " << num_transactions_ << endl;
+      return oss.str();
+    }
+
+    string purchase_history(Person customer) {
+      std::ostringstream oss;
+      for (int i = 0; i < num_transactions_; i++) {
+        if (transactions_[i].customer().name() == customer.name()) {
+          oss << "Transaction ID: " << transactions_[i].id();
+          oss << ", Product: " << transactions_[i].product().name();
+          oss << ", Amount: " << transactions_[i].amount() << endl;
+        }
+      }
+      return oss.str();
+    }
 }
 
 
