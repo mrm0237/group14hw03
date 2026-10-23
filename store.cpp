@@ -126,32 +126,19 @@ class Store{
 
     bool make_purchase(Person customer, product item, int amount) {
       // See if the customer exists in the store
-      int customer_index = -1;
-      for (int i = 0; i < num_customers_; i++) {
-        if (customers_[i].name() == customer.name()) {
-          customer_index = i;
-          break;
-        }  
-      }  
-      if (customer_index == -1) {
-        return false; // Nothing has changed in if statement; customer does not exist 
+      int customer_index = find_customer(cust); // gets the customer we're looking fot
+      if (customer_index == -1 || amount <= 0 || num_transactions_ >= 100) {
+        return false; // if the person doesn't exist or the transaction couldn't exist, do nothing
       }
-
-      // See if the product exists
-      int product_index = -1;
-      for (int i = 0; i < num_products_; i++) {
-        if (products_[i].name() == item.name()) {
-          product_index = i;
-          break;
-        }
-      }
-      if (product_index == -1) {
-        return false; // Product does not exist
-      }  
-
-      // Make a new transaction
-      transaction new_transaction(customer, item, amount);
-      return add_transaction(new_transaction);
+      // Get the person's credit card information
+      credit_card card = customer_[customer_index].person_credit_card()
+      
+      transaction t;
+      t.transaction_number = num_transactions_ + 1;
+      t.customer = customers_[customer_index];
+      t.purchased_item = item;
+      t.quantity = amount;
+      return add_transaction(t);
     }
 
     // Information methods: return the info of the store's products, transactions, purchases, and all store info
@@ -178,12 +165,12 @@ class Store{
     return oss.str();
   }
 
-    string store_info() {  // Return all the numerical info from the store
+    std::string Store::store_info() {  // Return all the numerical info from the store
       std::ostringstream oss;
       // Output the number of customers, products, and transactions for the store
-      oss << "Number of Customers: " << num_customers_ << endl;
-      oss << "Number of Products: " << num_products_ << endl;
-      oss << "Number of Transactions: " << num_transactions_ << endl;
+      oss << "Store Info:\nCustomers:\n" << customer_info();
+      oss << "Products:\n" << product_info();
+      oss << "All Transactions: " << transaction_info() << endl;
       return oss.str();
     }
 
