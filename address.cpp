@@ -17,6 +17,6 @@ string address::address_info() {
   if (!address_line2.empty()) {
     oss << address_line2 << endl;
   }
-  oss << city << ", " << state << " " << zip;
+  oss << city << "\n" << state << "\n" << zip << endl;
   return oss.str();
 }
