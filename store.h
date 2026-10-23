@@ -1,10 +1,10 @@
 // Riggs
-#ifndef STORE_H
-#define STORE_H
-
 #include "product.h"
 #include "transaction.h"
 #include "person.h"
+
+#ifndef STORE_H
+#define STORE_H
 
 class Store 
 {
