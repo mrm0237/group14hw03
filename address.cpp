@@ -5,30 +5,18 @@
 
 using namespace std;
 
-class Address {
-  
-  public:
-    Address();
-  private:
-    string address_line1;
-    string address_line2;
-    string city;
-    string state;
-    string zip;
-
-  string address_info() {
-    // This method returns a string cotaining the address information, including the address lines, city, state, and zip code
-    std::ostringstream oss;
-    /* Example: 
-    Shelby Center for Engineering Technology
-    357-359 W Magnolia Ave
-    Auburn, AL, 36830
-    */
-    oss << address_line1 << endl;
-    if (!address_line2.empty()) {
-      oss << address_line2 << endl;
-    }
-    oss << city << ", " << state << " " << zip;
+string address::address_info() {
+  // The private instance variables are already in the address.h, so we don't need to make them
+  std::ostringstream oss;
+  /* Example: 
+  Shelby Center for Engineering Technology
+  357-359 W Magnolia Ave
+  Auburn, AL, 36830
+  */
+  oss << address_line1 << endl;
+  if (!address_line2.empty()) {
+    oss << address_line2 << endl;
   }
-  return oss;
+  oss << city << ", " << state << " " << zip;
+  return oss.str();
 }
