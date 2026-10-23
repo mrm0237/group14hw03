@@ -30,4 +30,5 @@ class Address {
     }
     oss << city << ", " << state << " " << zip;
   }
+  return oss;
 }
