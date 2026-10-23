@@ -5,7 +5,6 @@
 #include <string>
 
 using std::string;
-using std::to_string;
 
 string credit_card::credit_card_info() {
     std::ostringstream out;
