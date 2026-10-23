@@ -17,6 +17,7 @@ class Address {
     string zip;
 
   string address_info() {
+    // This method returns a string cotaining the address information, including the address lines, city, state, and zip code
     std::ostringstream oss;
     /* Example: 
     Shelby Center for Engineering Technology
