@@ -4,7 +4,8 @@
 #include <iomanip>
 
 using std::string;
-using std::to_string;
+using namespace std;
+
 
 string transaction::transaction_info() {
     std::ostringstream out;
