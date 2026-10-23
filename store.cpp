@@ -9,7 +9,7 @@ using namespace std;
 
 class Store{ 
   public:
-    Store();
+    Store();  // calls Store from Store.h
   private:   // parameters
     int num_customers_;
     Customer* customers_;
@@ -46,8 +46,8 @@ class Store{
   int num_transactions() {
     return num_transactions_;
   }
-  // Now time for the methods! add methods for each parameter, update method for customer,
-  // get method for product and transaction, make_purchase method
+  // Now time for the constructors! ADD methods for each parameter, UPDATE method for customer,
+  // GET method for product and transaction, make_purchase method
   bool add_product(product item) {
     // See if the product exists in the store
     // This method is bool because if the product exists, we'll return false
@@ -61,10 +61,10 @@ class Store{
     for (int i = 0; i < num_products_; i++) { // add old products list to new
       new_products[i] = products_[i];
     }
-    new_products[num_products_] = item;
+    new_products[num_products_++] = item;  // make the new item be in the right place
+                                           // and increment num_products
     delete[] products_;         // out with the old
     products_ = new_products;   // in with the new
-    num_products_++;
     return true;
   }
     
@@ -79,15 +79,14 @@ class Store{
       for (int i = 0; i < num_customers_; i++) { // Populate new array
         new_customers[i] = customers_[i];
       }
-      new_customers[num_customers_] = customer;
+      new_customers[num_customers_++] = customer;
       delete[] customers_;         // out with the old,
       customers_ = new_customers;  // in with the new
-      num_customers_++;
       return true;
   }
   bool update_customer(int index, Person customer) {
     if (index < 0 || index >= num_customers_) {
-      return false;  // check that index is in amount of customers array
+      return false;  // check that index is in bounds of customers array
     }
     customers_[index] = customer;  // customer at that index is changed to this customer
     return true;
@@ -107,12 +106,12 @@ class Store{
           return false;  // Transaction already exists
         }
       }
-      // Add the transaction to the store
-    transaction* new_transactions = new transaction[num_transactions_++];
-      for (int i = 0; i < num_transactions_-1; i++) {
+      // Add the transaction to the store by making a new array with num_transactions_ + 1 items
+    transaction* new_transactions = new transaction[num_transactions_];
+      for (int i = 0; i < num_transactions_; i++) {
         new_transactions[i] = transactions_[i];
       }
-      new_transactions[num_transactions_] = transaction;
+      new_transactions[num_transactions_++] = transaction; // new transaction array
       delete[] transactions_;
       transactions_ = new_transactions;
       return true;
@@ -135,7 +134,7 @@ class Store{
         }  
       }  
       if (customer_index == -1) {
-        return false; // Customer does not exist 
+        return false; // Nothing has changed in if statement; customer does not exist 
       }
 
       // See if the product exists
@@ -155,9 +154,11 @@ class Store{
       return add_transaction(new_transaction);
     }
 
+    // Information methods: return the info of the store's products, transactions, purchases, and all store info
     // Returns a string listing all products associated with the store
     string product_info() {
       std::ostringstream oss;
+      // Output the Product Name and Price for every product
       for (int i = 0; i < num_products_; i++) {
         oss << "Product Name: " << products_[i].name();
         oss << ", Price: " << products_i.price() << endl;
@@ -167,6 +168,7 @@ class Store{
     // Returns a string of all the transactions the store has made
     string transaction_info() {
       std::ostringstream oss;
+      // Output the Transaction ID, Customer, Product, and Amount for each transaction
       for (int i = 0; i < num_transactions_; i++) {
         oss << "Transaction ID: " << transaction_[i].id();
         oss << ", Customer: " << transactions_[i].customer().name();
@@ -176,8 +178,9 @@ class Store{
     return oss.str();
   }
 
-    string store_info() {  // Return all of the info from the store
+    string store_info() {  // Return all the numerical info from the store
       std::ostringstream oss;
+      // Output the number of customers, products, and transactions for the store
       oss << "Number of Customers: " << num_customers_ << endl;
       oss << "Number of Products: " << num_products_ << endl;
       oss << "Number of Transactions: " << num_transactions_ << endl;
@@ -186,6 +189,7 @@ class Store{
 
     string purchase_history(Person customer) {
       std::ostringstream oss;
+      // Output the Transaction ID, Product, and Amount for each transaction 
       for (int i = 0; i < num_transactions_; i++) {
         if (transactions_[i].customer().name() == customer.name()) {
           oss << "Transaction ID: " << transactions_[i].id();
