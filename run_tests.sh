@@ -14,7 +14,7 @@ if !make; then
 fi
 
 for f in $DATA_FILES; do
-  if [ i -f "$f" ]; then
+  if [[ i -f "$f" ]]; then
     echo "Missing data file: $f"
     exit 1
   fi
@@ -26,13 +26,13 @@ $PROGRAM > "$ACTUAL" 2>$1
 status=$?
 cat "$ACTUAL"
 
-if [ $status -ne 0 ]; then
+if [[ $status -ne 0 ]]; then
   echo "FAIL: program exited with code $status"
   exit 1
 fi
 
 ## Compare the output to what we would expect
-if [-f "$EXPECTED" ]; then
+if [[-f "$EXPECTED" ]]; then
   if diff -u "$EXPECTED" "$ACTUAL"; then
     echo "PASS: output matches $EXPECTED"
   else
