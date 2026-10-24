@@ -1,10 +1,9 @@
 #!/bin/bash
-## run_tests.sh builds the program, checks the data files, runs it
+# run_tests.sh builds the program, checks the data files, runs it
 
 PROGRAM=./program
 DATA_FILES="credit_card.txt people.txt products.txt"
-ACTUALOTP=actual_output.txt
-EXPECTEDOTP=expected_output.txt
+ACTUAL=actual_output.txt
 
 ## Build from scratch
 echo "Building..."
@@ -15,7 +14,7 @@ if ! make; then
 fi
 
 for f in $DATA_FILES; do
-  if [ i -f "$f" ]; then
+  if [ ! -f "$f" ]; then
     echo "Missing data file: $f"
     exit 1
   fi
