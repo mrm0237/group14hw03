@@ -5,51 +5,21 @@
 #include <string>
 #include <cstdlib>
 #include <ctime>
+#include <cctype>
 // store.h already imports the other files (address and cc in Person)
 #include "store.h"
 
 using namespace std; 
 
-// helper functions since my program is making me want to
-// reads one line and removes a trailing '\r' (Windows line ending)
-static bool read_line(istream& in, string& line) {
-    if (!getline(in, line)) return false;
-    if (!line.empty() && line.back() == '\r') line.pop_back();
-    return true;
-}
-
-static bool all_digits(const string& s) {
-    if (s.empty()) return false;
-    for (size_t i = 0; i < s.size(); i++)
-        if (s[i] < '0' || s[i] > '9') return false;
-    return true;
-}
-
-// If the first line is just a count, skip it. Otherwise rewind to the start.
+// Helper function - If the first line of a file starts with a digit, skip it
 static void skip_count_line(ifstream& in) {
-    string first;
-    read_line(in, first);
-    if (!all_digits(first)) {
-        in.clear();
-        in.seekg(0);
-    }
-}
-
-static double to_double(const string& s, const string& where) {
-    try { return stod(s); }
-    catch (...) {
-        cerr << "ERROR: bad number in " << where << ": [" << s << "]" << endl;
-        exit(1);
-    }
-}
-
-static int to_int(const string& s, const string& where) {
-    try { return stoi(s); }
-    catch (...) {
-        cerr << "ERROR: bad number in " << where << ": [" << s << "]" << endl;
-        exit(1);
-    }
-}
+	string first;
+	getline(in, first);
+	if (first.empty() || isdigit(static_cast<unsigned char>(first[0]))) {
+		in.clear();
+		in.seekg(0);
+	}
+}  // My program had something wrong with it that I couldn't find out, so I asked Claude 
 
 int main()
 {
@@ -62,11 +32,12 @@ int main()
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
 	skip_count_line(pin);
-	while (num_prods < 100 && read_line(pin, line) && !line.empty()) {
-        products[num_prods].name = line;
-        read_line(pin, products[num_prods].description); 	// read description
-        read_line(pin, line);
-        products[num_prods++].price = to_double(line, "products.txt price");		// converts string to double and increments num_prods
+	string name;
+	string desc;
+	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
+        getline(pin, desc); // read description
+        getline(pin, line); 	 
+        products[num_prods++].price = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
 	string card_names[100];
@@ -76,12 +47,12 @@ int main()
 	skip_count_line(cin_file);
 	while (num_cards < 100 && read_line(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
-		read_line(cin_file, line);	// read credit card number
-		cards[num_cards].cc_number = to_int(line, "credit_card.txt number");	// store in the struct
-		read_line(cin_file, line);	// read credit limit
-		cards[num_cards].limit = to_double(line, "credit_card.txt limit");		// store in the struct
-		read_line(cin_file, line);	// read current balance
-		cards[num_cards].current_balance = to_double(line, "credit_card.txt balance");	// store in the struct
+		getline(cin_file, line);	// read credit card number
+		cards[num_cards].cc_number = stoi(line);	// store in the struct
+		getline(cin_file, line);	// read credit limit
+		cards[num_cards].limit = stod(line);		// store in the struct
+		getline(cin_file, line);	// read current balance
+		cards[num_cards].current_balance = stod(line);	// store in the struct
 		num_cards++;
 	}
 
@@ -91,22 +62,22 @@ int main()
 	ifstream fin("people.txt");
 	skip_count_line(fin);
 	while (num_people < 100 && getline(fin, line) && !line.empty()) {
-		string name = line, phone;
+		string cname = line, phone;
 		address addr;
 		// gets lines from file: phone, address lines, city, state, and zip
-		read_line(fin, phone);
-		read_line(fin, addr.address_line1);
-		read_line(fin, addr.address_line2);		// possibly blank
-		read_line(fin, addr.city);
-		read_line(fin, addr.state);
-		read_line(fin, addr.zip);
+		getline(fin, phone);
+		getline(fin, addr.address_line1);
+		getline(fin, addr.address_line2);		// possibly blank
+		getline(fin, addr.city);
+		getline(fin, addr.state);
+		getline(fin, addr.zip);
 
 		credit_card card;		// default, then match by name
 		card.cc_number = 0;
 		card.limit = 0;
 		card.current_balance = 0;
 		for (int i = 0; i < num_cards; i++) {
-			if (card_names[i] == name) {
+			if (card_names[i] == cname) {
 				card = cards[i]; 
 			}
 		}
