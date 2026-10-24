@@ -37,7 +37,6 @@ int main()
 	credit_card cards[100];
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
-	skip_count_line(cin_file);
 	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
 		getline(cin_file, line);	// read credit card number
@@ -53,7 +52,6 @@ int main()
 	Person people[100];
 	int num_people = 0;
 	ifstream fin("people.txt");
-	skip_count_line(fin);
 	while (num_people < 100 && getline(fin, line) && !line.empty()) {
 		string cname = line, phone;
 		address addr;
