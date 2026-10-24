@@ -11,8 +11,6 @@
 
 using namespace std; 
 
-// Helper function - If the first line of a file starts with a digit, skip it
-
 int main()
 {
 	//add to store and other variables
