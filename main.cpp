@@ -35,7 +35,7 @@ int main()
 	credit_card cards[100];
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
-	getline(cin_file, line) // skips the count line
+	getline(cin_file, line); // skips the count line
 	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
 		getline(cin_file, line);	// read credit card number
