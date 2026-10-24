@@ -21,7 +21,7 @@ int main()
 	product products[100];
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
-	skip_count_line(pin);
+	getline(pin, line); // skip the count line
 	string name;
 	string desc;
 	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
@@ -33,7 +33,6 @@ int main()
 	credit_card cards[100];
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
-	skip_count_line(cin_file);
 	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
 		getline(cin_file, line);	// read credit card number
