@@ -37,7 +37,7 @@ int main()
 	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
         getline(pin, desc); // read description
         getline(pin, line); 	 
-        products[num_prods++].price = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
+        products[num_prods++] = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
 	string card_names[100];
@@ -45,7 +45,7 @@ int main()
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
 	skip_count_line(cin_file);
-	while (num_cards < 100 && read_line(cin_file, line) && !line.empty()) {
+	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
 		getline(cin_file, line);	// read credit card number
 		cards[num_cards].cc_number = stoi(line);	// store in the struct
