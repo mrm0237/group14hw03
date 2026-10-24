@@ -32,11 +32,12 @@ int main()
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
 	skip_count_line(pin);
+	ifstream pin("products.txt");
+	getline(pin, line);
 	string name;
 	string desc;
 	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
-        getline(pin, desc); // read description
-        getline(pin, line); 	 
+        if (!getline(pin, desc) || !getline(pin, line || line.empty()) break; // read description
         products[num_prods++] = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
