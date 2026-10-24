@@ -56,6 +56,22 @@ bool Store::update_customer(int index, Person customer) {
   return true;
 }
 
+Person Store::get_customer(int index) {
+    if (index >= 0 && index < num_customers_) {
+      return customers_[index];
+    }
+    return Person();
+}
+
+int Store::find_customer(Person cust) {
+    for (int i = 0; i < num_customers_; i++) {
+        if (customers_[i].name() == cust.name() &&
+            customers_[i].phone() == cust.phone())
+            return i;
+    }
+    return -1;
+}
+
 product Store::get_product(int index) {
   if (index >= 0 && index < num_products_) 
     return products_[index];   // output products_[index]
