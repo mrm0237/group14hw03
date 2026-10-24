@@ -27,10 +27,12 @@ int main()
 	product products[100];
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
-    while (num_prods < 100 && read_line(pin, line) && !line.empty()) {
-        products[num_prods].name = line; 	// read name
+	read_line(pin, line);
+	int prod_count = stoi(line);
+	for (int i = 0; i < prod_count && i < 100; i++) {
+        if (!read_line(pin, products[num_prods].name)) break;
         read_line(pin, products[num_prods].description); 	// read description
-        if (!read_line(pin, line) || line.empty()) break;					// read price
+        read_line(pin, line);
         products[num_prods++].price = stod(line);		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
