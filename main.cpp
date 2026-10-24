@@ -10,6 +10,13 @@
 
 using namespace std; 
 
+// reads one line and removes a trailing '\r' (Windows line ending)
+static bool read_line(istream& in, string& line) {
+    if (!getline(in, line)) return false;
+    if (!line.empty() && line.back() == '\r') line.pop_back();
+    return true;
+}
+
 int main()
 {
 	//add to store and other variables
@@ -20,10 +27,10 @@ int main()
 	product products[100];
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
-    while (num_prods < 100 && getline(pin, line) && !line.empty()) {
+    while (num_prods < 100 && read_line(pin, line) && !line.empty()) {
         products[num_prods].name = line; 	// read name
-        getline(pin, products[num_prods].description); 	// read description
-        getline(pin, line);					// read price
+        read_line(pin, products[num_prods].description); 	// read description
+        if (!read_line(pin, line) || line.empty())) break;					// read price
         products[num_prods++].price = stod(line);		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
@@ -31,13 +38,13 @@ int main()
 	credit_card cards[100];
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
-	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
+	while (num_cards < 100 && read_line(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
-		getline(cin_file, line);			// read credit card number
+		if (!read_line(cin_file, line) || line.empty()) break;	// read credit card number
 		cards[num_cards].cc_number = stoi(line);	// store in the struct
-		getline(cin_file, line);			// read credit limit
+		if (!read_line(cin_file, line) || line.empty()) break;	// read credit limit
 		cards[num_cards].limit = stod(line);		// store in the struct
-		getline(cin_file, line);			// read current balance
+		if (!read_line(cin_file, line) || line.empty()) break;	// read current balance
 		cards[num_cards].current_balance = stod(line);	// store in the struct
 		num_cards++;
 	}
@@ -50,12 +57,12 @@ int main()
 		string name = line, phone;
 		address addr;
 		// gets lines from file: phone, address lines, city, state, and zip
-		getline(fin, phone);
-		getline(fin, addr.address_line1);
-		getline(fin, addr.address_line2);
-		getline(fin, addr.city);
-		getline(fin, addr.state);
-		getline(fin, addr.zip);
+		read_line(fin, phone);
+		read_line(fin, addr.address_line1);
+		read_line(fin, addr.address_line2);
+		read_line(fin, addr.city);
+		read_line(fin, addr.state);
+		read_line(fin, addr.zip);
 
 		credit_card card;		// default, then match by name
 		card.cc_number = 0;
