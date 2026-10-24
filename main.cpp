@@ -11,16 +11,6 @@
 
 using namespace std; 
 
-// Helper function - If the first line of a file starts with a digit, skip it
-static void skip_count_line(ifstream& in) {
-	string first;
-	getline(in, first);
-	if (first.empty() || isdigit(static_cast<unsigned char>(first[0]))) {
-		in.clear();
-		in.seekg(0);
-	}
-}  // My program had something wrong with it that I couldn't find out, so I asked Claude 
-
 int main()
 {
 	//add to store and other variables
@@ -31,12 +21,11 @@ int main()
 	product products[100];
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
-	getline(pin, line);
+	skip_count_line(pin);
 	string name;
 	string desc;
 	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
-        getline(pin, desc); // read description
-        getline(pin, line); 	 
+        if (!getline(pin, desc) || !getline(pin, line || line.empty()) break; // read description
         products[num_prods++] = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
@@ -44,7 +33,7 @@ int main()
 	credit_card cards[100];
 	int num_cards = 0;
 	ifstream cin_file("credit_card.txt");	// Open credit_card.txt
-	getline(cin_file, line);
+	skip_count_line(cin_file);
 	while (num_cards < 100 && getline(cin_file, line) && !line.empty()) {
 		card_names[num_cards] = line;		// read name of the cardholder
 		getline(cin_file, line);	// read credit card number
@@ -60,7 +49,7 @@ int main()
 	Person people[100];
 	int num_people = 0;
 	ifstream fin("people.txt");
-	getline(fin, line);
+	skip_count_line(fin);
 	while (num_people < 100 && getline(fin, line) && !line.empty()) {
 		string cname = line, phone;
 		address addr;
