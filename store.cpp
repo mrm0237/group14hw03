@@ -11,7 +11,7 @@ using namespace std;
 Store::Store() { // default constructor; set everything to 0 or null
   num_customers_ = 0;
   num_products_ = 0;
-  num_transactions = 0;
+  num_transactions_ = 0;
 }
 // Make setters and getters for the private variables
 void Store::num_products(int product_count) {
@@ -40,7 +40,7 @@ bool Store::add_product(product item) {
   // This method is bool because if the product is not in range, we'll return false
   if (num_products_ >= 100) return false; 
   products_[num_products_++] = item;
-  return true
+  return true;
 }
  
 bool Store::add_customer(Person customer) {
@@ -56,13 +56,13 @@ bool Store::update_customer(int index, Person customer) {
   return true;
 }
 
-product get_product(int index) {
+product Store::get_product(int index) {
   if (index >= 0 && index < num_products_) 
     return products_[index];   // output products_[index]
   return product();
 }
 
-bool Store::add_transaction(transaction ntranscation) {
+bool Store::add_transaction(transaction ntransaction) {
   if (num_transactions_ >= 100) {
     return false;  // if out of bounds
   }
@@ -72,8 +72,9 @@ bool Store::add_transaction(transaction ntranscation) {
 
 transaction Store::get_transaction(int index) {
   if (!(index < 0 || index >= num_transactions_)) { // if it's not erroneous
-    return transaction();
+    return transactions_[index];
   }
+  return transaction();
 }
 
 bool Store::make_purchase(Person customer, product item, int amount) {
@@ -83,7 +84,7 @@ bool Store::make_purchase(Person customer, product item, int amount) {
     return false; // if the person doesn't exist or the transaction couldn't exist, do nothing
   }
   // Get the person's credit card information
-  credit_card card = customer_[customer_index].person_credit_card()
+  credit_card card = customers_[customer_index].person_credit_card();
   if (!card.make_purchase(item.price*amount)) {
     return false;  // if ya broke, you can't buy it (over the limit)
   }
@@ -120,7 +121,7 @@ bool Store::make_purchase(Person customer, product item, int amount) {
 std::string Store::customer_info() {
   std::ostringstream oss;
   for (int i = 0; i < num_customers_; i++)
-    oss << customer_[i].person_info();
+    oss << customers_[i].person_info();
   return oss.str();
 }
 std::string Store::store_info() {  // Return all the numerical info from the store
@@ -132,7 +133,7 @@ std::string Store::store_info() {  // Return all the numerical info from the sto
   return oss.str();
 }
 
-std::string Store::purchase_history(Person customer) {
+std::string Store::purchase_history(Person cust) {
   std::ostringstream oss;
   // Output the transaction information for each transaction 
   for (int i = 0; i < num_transactions_; i++) {
