@@ -7,7 +7,7 @@ std::string product::product_info() {
   std::ostringstream out;
   out << "Name: " << name << "\n";
   out << "Description: " << description << std::endl;
-  out << "Price: $" << std::fixed << std::setprecision(2) << price << endl;
+  out << "Price: $" << std::fixed << std::setprecision(2) << price << std::endl;
   return out.str();
 }
 // Makes a product for the main method and test cases, P_NAME and others will be made in other methods
