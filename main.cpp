@@ -10,11 +10,45 @@
 
 using namespace std; 
 
+// helper functions since my program is making me want to
 // reads one line and removes a trailing '\r' (Windows line ending)
 static bool read_line(istream& in, string& line) {
     if (!getline(in, line)) return false;
     if (!line.empty() && line.back() == '\r') line.pop_back();
     return true;
+}
+
+static bool all_digits(const string& s) {
+    if (s.empty()) return false;
+    for (size_t i = 0; i < s.size(); i++)
+        if (s[i] < '0' || s[i] > '9') return false;
+    return true;
+}
+
+// If the first line is just a count, skip it. Otherwise rewind to the start.
+static void skip_count_line(ifstream& in) {
+    string first;
+    read_line(in, first);
+    if (!all_digits(first)) {
+        in.clear();
+        in.seekg(0);
+    }
+}
+
+static double to_double(const string& s, const string& where) {
+    try { return stod(s); }
+    catch (...) {
+        cerr << "ERROR: bad number in " << where << ": [" << s << "]" << endl;
+        exit(1);
+    }
+}
+
+static int to_int(const string& s, const string& where) {
+    try { return stoi(s); }
+    catch (...) {
+        cerr << "ERROR: bad number in " << where << ": [" << s << "]" << endl;
+        exit(1);
+    }
 }
 
 int main()
