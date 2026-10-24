@@ -10,8 +10,8 @@ string credit_card::credit_card_info() {
     std::ostringstream out;
 
     out << "Card Number: " << cc_number
-        << "\nCard Balance: $" << std::fixed << std::setprecision(2) << current_balance
-        << "\nCard Limit: $" << limit << "\n";
+        << "\nCard Balance: $" << std::fixed << std::setprecision(2) << limit
+        << "\nCard Limit: $" << current_balance << "\n";
 
     return out.str();
 }
