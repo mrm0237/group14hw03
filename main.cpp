@@ -72,7 +72,7 @@ int main()
 				card = cards[i]; 
 			}
 		}
-		people[num_people++] = Person(name, phone, addr, card);
+		people[num_people++] = Person(cname, phone, addr, card);
 	}
 	// add everything to the store
 	for (int i = 0; i < num_prods; i++)
