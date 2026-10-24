@@ -22,7 +22,7 @@ done
 
 ## Run the program and capture its output
 echo "Running program..."
-$PROGRAM > "$ACTUAL" 2>$1
+$PROGRAM > "$ACTUAL" 2>&1
 status=$?
 cat "$ACTUAL"
 
