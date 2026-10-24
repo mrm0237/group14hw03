@@ -12,14 +12,6 @@
 using namespace std; 
 
 // Helper function - If the first line of a file starts with a digit, skip it
-static void skip_count_line(ifstream& in) {
-	string first;
-	getline(in, first);
-	if (first.empty() || isdigit(static_cast<unsigned char>(first[0]))) {
-		in.clear();
-		in.seekg(0);
-	}
-}  // My program had something wrong with it that I couldn't find out, so I asked Claude 
 
 int main()
 {
@@ -31,7 +23,7 @@ int main()
 	product products[100];
 	int num_prods = 0;
     ifstream pin("products.txt"); 	// open products.txt to read
-	skip_count_line(pin);
+	getline(pin, line); // skip the count line
 	ifstream pin("products.txt");
 	getline(pin, line);
 	string name;
