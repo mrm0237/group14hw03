@@ -5,7 +5,7 @@
 
 std::string product::product_info() {
   std::ostringstream out;
-  out << "Name: " name << endl;
+  out << "Name: " << name << "\n";
   out << "Description: " << description << endl;
   out << "Price: $" << std::fixed << std::setprecision(2) << price << endl;
   return out.str();
