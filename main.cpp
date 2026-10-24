@@ -30,7 +30,7 @@ int main()
     while (num_prods < 100 && read_line(pin, line) && !line.empty()) {
         products[num_prods].name = line; 	// read name
         read_line(pin, products[num_prods].description); 	// read description
-        if (!read_line(pin, line) || line.empty())) break;					// read price
+        if (!read_line(pin, line) || line.empty()) break;					// read price
         products[num_prods++].price = stod(line);		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
