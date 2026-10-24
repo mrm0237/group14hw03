@@ -25,7 +25,7 @@ int main()
 	string name;
 	string desc;
 	while (num_prods < 100 && getline(pin, name) && !name.empty()) {
-        if (!getline(pin, desc) || !getline(pin, line || line.empty()) break; // read description
+        if ((!getline(pin, desc)) || (!getline(pin, line || line.empty()))) break; // read description
         products[num_prods++] = make_product(name, desc, stod(line));		// converts string to double and increments num_prods
     }
 	// credit_card.txt: name, number, limit, and balance
@@ -48,7 +48,7 @@ int main()
 	Person people[100];
 	int num_people = 0;
 	ifstream fin("people.txt");
-	skip_count_line(fin);
+	getline(fin, line);
 	while (num_people < 100 && getline(fin, line) && !line.empty()) {
 		string cname = line, phone;
 		address addr;
