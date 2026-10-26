@@ -11,7 +11,7 @@ string credit_card::credit_card_info() {
 
     out << "Credit card number: " << cc_number
         << "\nCredit Card Limit: $" << std::fixed << std::setprecision(2) << limit
-        << "\nCredit Card Balance: $" << current_balance << "\n";
+        << "\nCredit Card Balance: $" << current_balance << "\n\n";
 
     return out.str();
 }
